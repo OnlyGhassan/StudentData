@@ -66,7 +66,7 @@ Update the connection string in appsettings.json:
  GET /student/absent/{studentId}
  
 Swagger
-Swagger is used for API documentation and testing. After running the application, navigate to http://localhost:5000/swagger to view the API documentation.
+Swagger is used for API documentation and testing. After running the application, navigate to http://localhost:5062/swagger to view the API documentation.
 
 Dependency Injection
 The project uses Dependency Injection to manage dependencies. The following services are registered in Startup.cs:
