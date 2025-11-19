@@ -1,4 +1,4 @@
-# StudentData
+# StudentData, (the code is in private repository due to data sensitivity)
 StudentInfo, ScheduleInfo, AbsentInfo
 # COOP Management System
 
