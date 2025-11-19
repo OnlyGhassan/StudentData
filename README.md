@@ -1,8 +1,8 @@
 # "the code is in private repository due to data sensitivity"
 
-# StudentData
+# StudentsSystem-COOP
 StudentInfo, ScheduleInfo, AbsentInfo
-# COOP Management System
+# COOP project: Students Information Management System
 
 This project is a COOP Management System built with ASP.NET Core using the Repository and Unit of Work patterns. It manages students, schedules, and absences, and provides an API for these operations.
 
