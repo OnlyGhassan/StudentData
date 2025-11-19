@@ -1,4 +1,6 @@
-# StudentData, (the code is in private repository due to data sensitivity)
+# "the code is in private repository due to data sensitivity"
+
+# StudentData
 StudentInfo, ScheduleInfo, AbsentInfo
 # COOP Management System
 
