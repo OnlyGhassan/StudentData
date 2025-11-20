@@ -1,100 +1,259 @@
 # "The code is in private repository due to data sensitivity"
 
-# InternshipProject-StudentsSystem
-StudentInfo, ScheduleInfo, AbsentInfo
-# COOP Project: Students Information Management System
 
-This project is a COOP Management System built with ASP.NET Core using the Repository and Unit of Work patterns. It manages students, schedules, and absences, and provides an API for these operations.
+# COOP Project: KAU_OLR_API
 
-## Project Structure
+## Overview
 
-- **Controllers**: Handles API requests.
-- **Models**: Contains data models.
-- **Repository**: Contains repository interfaces and implementations.
-- **Data**: Contains the DbContext for Entity Framework Core.
+The KAU_OLR_API (King Abdulaziz University Online Registration API) is a comprehensive system designed to manage university data, including student information, schedules, absentee records, contracts, and sections. This system allows administrators and users to retrieve and manage various types of academic and administrative data effectively.
+
+## System Architecture
+![CodeFlow2](https://github.com/user-attachments/assets/781d838c-2928-4c52-bfb0-e6e1792886ea)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Prerequisites](#prerequisites)
+- [Database Setup](#database-setup)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Testing] (#Testing)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgments] (#Acknowledgments)
+
+
+## Features
+
+- Retrieve student information by student ID and term date.
+- Fetch schedule information for students based on their ID and term date.
+- Obtain absentee records for students by student ID and term date.
+- Retrieve section information using various parameters.
+- Retrieve contract information using various parameters.
+- Implement the Unit of Work pattern to manage database operations.
+- Retrieve faculty and instructor details by ID and term.
 
 ## Technologies Used
 
-- ASP.NET Core
-- Entity Framework Core
-- SQL Server
-- Swagger
+- **ASP.NET Core**: Web API framework
+- **Entity Framework Core**: ORM for database operations
+- **SQL Server**: Database management system
+- **Dependency Injection**: For managing dependencies and services
+- **Logging**: Using Microsoft.Extensions.Logging
+- **AutoMapper**: For object-to-object mapping
 
-## Getting Started
+## Prerequisites
 
-### Prerequisites
+Before you begin, ensure you have met the following requirements:
 
-- .NET Core SDK 6.0 or later
-- SQL Server
+- .NET Core SDK installed on your machine
+- SQL Server or SQL Express installed
+- Basic knowledge of C# and ASP.NET Core
+- Basic knowledge of C#, ASP.NET Core, and SQL 
+- Familiarity with RESTful APIs
 
-### Installation
+## Database Setup
 
-1. **Clone the repository:**
+### 1. Create the Database
 
-   ```bash
-   git clone https://github.com/yourusername/coop-management-system.git
-   cd coop-management-system
+Create a new database in your SQL Server instance. You can do this using SQL Server Management Studio (SSMS) or any other database management tool.
 
-### Configure the database:
+### 2. Update Connection String
 
-Update the connection string in appsettings.json:
+Update the connection string in `appsettings.json` with your SQL Server details. The `appsettings.json` file is located in the root of the project.
 
-   {
+```json
+{
   "ConnectionStrings": {
-    "DefaultConnection": "Server=your_server;Database=your_database;Trusted_Connection=True;MultipleActiveResultSets=true"
+    "DefaultConnection": "Server=your_server_name;Database=your_database_name;User Id=your_username;Password=your_password;"
   }
 }
+```
 
-### Run database migrations:
- 
- dotnet ef database update
+### 3. Apply Migrations
 
- ### Run the application:
+Open a terminal or command prompt in the project directory and run the following command to apply migrations and create the necessary database schema:
 
- dotnet run
- 
- ## API Endpoints
+dotnet ef database update
 
- ### Get Student Information:
 
- GET /student/{studentId}
+## Installation
 
- ### Get Schedule Information:
+### 1. Clone the Repository
+```
+git clone https://github.com/Auruka/KAU_OLR_API_Repository.git
+cd KAU_OLR_API
+```
 
- GET /student/schedule/{studentId}
+### 2. Restore NuGet Packages
 
- ### Get Absence Information:
+Restore the required NuGet packages by running the following command:
+```
+dotnet restore
+```
+### 3. Run the Application
 
- GET /student/absent/{studentId}
- 
-Swagger
-Swagger is used for API documentation and testing. After running the application, navigate to http://localhost:5062/swagger to view the API documentation.
+Run the application using the following command:
+```
+dotnet run
+```
 
-Dependency Injection
-The project uses Dependency Injection to manage dependencies. The following services are registered in Startup.cs:
+## Usage
 
-IStudentData and StudentDataRepository
-IAbsentData and AbsentDataRepository
-IScheduleData and ScheduleDataRepository
-IUnitOfWork and UnitOfWork
-IStudentService and StudentService
-Repository Pattern
-Repositories are used to abstract the data access layer. Each entity (Student, Schedule, Absent) has its own repository interface and implementation.
+##Endpoints
 
-Unit of Work Pattern
-The Unit of Work pattern is used to group repository operations into a single transaction. The UnitOfWork class manages the repositories and ensures that all operations are committed together.
+###Get Student Data
 
-Contributing
-Contributions are welcome! Please open an issue or submit a pull request.
+  - URL: /student/StudentData
+  - Method: GET
+  - Parameters:
+    - Date: The term date
+    - studentId: The student ID
+   
+  - Example:
+```
+    curl -X GET "https://localhost:5274/api/NewApi/StudentData?Date=202401&studentId=1234567"
+```
+### Get Schedule Data
 
-License
-This project is licensed under the MIT License.
+- URL: /student/ScheduleData
+- Method: GET
+- Parameters:
+  - Date: The term date
+  - studentId: The student ID
+    
+- Example:
+```
+curl -X GET "https://localhost:5274/api/NewApi/ScheduleData?Date=202401&studentId=1234567"
+```
+### Get Absent Data
 
-Acknowledgements
-ASP.NET Core Documentation
-Entity Framework Core Documentation
+- URL: /student/AbsentData
+- Method: GET
+- Parameters:
+  - Date: The term date
+  - studentId: The student ID
 
-Feel free to modify this README file according to your project's specifics and needs.
+- Example:
+```
+curl -X GET "https://localhost:5274/api/NewApi/AbsentData?Date=202401&studentId=1234567"
+```
+### Get Section Data
+
+- URL: /api/NewApi/teacher-data
+- Method: GET
+- Parameters:
+  - term: The term date
+  - crn: The CRN for the section
+  - Gender: Gender of the teacher
+  - atts: Acceptance type
+  - id: The ID of the teacher
+  - level: Level of study
+  - type: Type of the contract (approved or not)
+  - faculty: Faculty of the contract
+  - courseCode: The code of the course (e.g., CPIT210)
+
+- Example:
+```
+curl -X GET "https://localhost:5274/api/NewApi/teacher-data?term=202401&crn=13513&Gender=M&atts=DLRN&id=00052297&level=UG&type=approved&faculty=IT&courseCode=psy211"
+```
+### Get Contract Data
+
+- URL: /api/NewApi/search-sections
+- Method: GET
+- Parameters:
+  - Term: The term date
+  - CRN: The CRN for the section
+  - AcceptanceType: Acceptance type
+  - InstructorID: The ID of the teacher
+  - Level: Level of study
+  - Campus: Campus of the contract
+  - Course: The code of the course (e.g., CPIT210)
+
+- Example:
+```
+curl -X GET "https://localhost:5274/api/NewApi/search-sections?CRN=13653&Campus=MCB&InstructorID=00016623&Course=CPCS381&Term=202401&AcceptanceType=REGL&Level=UG"
+```
+
+## Project Structure
+
+```
+appsettings.Development.json
+appsettings.json
+KAU_OLR_API.csproj
+KAU_OLR_API.http
+KAU_OLR_API.sln
+Program.cs
+
+├───Controllers
+│       NewApiController.cs
+│       StudentController.cs
+├───Dtos
+│       CourseContractDto.cs
+│       SectionDataDto.cs
+├───Models
+│       AbsentInfo.cs
+│       ScheduleInfo.cs
+│       StudentDatum.cs
+│       StudentInfo.cs
+├───Repositories
+│       DoctorContractRepo.cs
+│       IDoctorContractData.cs
+│       ISectionData.cs
+│       IAbsentData.cs
+│       IScheduleData.cs
+│       IStudentData.cs
+│       SectionRepo.cs
+│       AbsentDataRepository.cs
+│       ScheduleDataRepository.cs
+│       StudentDataRepository.cs
+├───Services
+│       SearchContract.cs
+│       SearchSection.cs
+│       ISectionService.cs
+│       SectionService.cs
+├───UnitOfWork
+│       IUnitOfWork.cs
+│       UnitOfWork.cs
+└───WebPage
+    ├───css
+    │       sheduleSheet.css
+    │       styles.css
+    ├───img
+    │       icons8-user-circle-96.png
+    │       logo.webp
+    │       photo_2024-07-10_10-30-55.jpg
+    └───js
+            display.js
+            main.js
+            models.js
+```
+## Testing 
+Unit Tests: Implement unit tests for critical components using xUnit or NUnit.
+Integration Tests: Set up integration tests to ensure API endpoints work correctly with the database.
+
+## Contributing
+
+### Contributions are always welcome! Please follow these steps:
+
+ 1. Fork the repository.
+ 2. Create a new branch (git checkout -b feature-name).
+ 3. Make your changes and commit them (git commit -m 'Add some feature').
+ 4. Push to the branch (git push origin feature-name).
+ 5. Open a Pull Request.
+ 6. Engage in the review process.
+ 7. Keep your branch updated.
+
+## License
+
+### This project is licensed under the MIT License - see the LICENSE file for details.
+
+### Acknowledgments 
+
+## Special thanks to the development team and contributors who helped make this project a success.
 
 ### Instructions for Adding the README to GitHub
 
